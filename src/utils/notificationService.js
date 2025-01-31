@@ -5,6 +5,8 @@ import {useNavigation} from '@react-navigation/native';
 // import {createNavigationContainerRef} from '@react-navigation/native';
 
 // export const navigationRef = createNavigationContainerRef();
+import { Alert } from 'react-native';
+
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -21,6 +23,7 @@ export async function requestUserPermission() {
 const getFcmToken = async () => {
   let fcmToken = await AsyncStorage.getItem('fcmToken');
   console.log('old token', fcmToken);
+  Alert.alert("fcmToken :- ",fcmToken);
   if (!fcmToken) {
     try {
       const fcmToken = await messaging().getToken();
@@ -78,6 +81,8 @@ export const notificationListner = async () => {
       // visibility: 'public',
       // importance: 4,
     });
+    Alert.alert(`${remoteMessage.notification.title}\n${remoteMessage.notification.body}`);
+
   });
 
   // Check whether an initial notification is available
